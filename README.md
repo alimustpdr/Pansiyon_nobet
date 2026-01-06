@@ -60,22 +60,29 @@ Her pansiyon için her gün tipi ayrı ayrı ayarlanabilir.
 npm run install:all
 ```
 
-2. **Geliştirme modunda çalıştırın:**
+2. **Native modülleri yeniden derleyin (önemli!):**
+```bash
+cd backend && npm rebuild better-sqlite3 && cd ..
+```
+
+3. **Geliştirme modunda çalıştırın:**
 ```bash
 npm run dev
 ```
 
 Bu komut hem backend (port 3001) hem de frontend (port 5173) sunucularını başlatır.
 
-3. **Üretim için derleyin:**
+4. **Üretim için derleyin:**
 ```bash
 npm run build
 ```
 
-4. **Üretim modunda çalıştırın:**
+5. **Üretim modunda çalıştırın:**
 ```bash
 npm start
 ```
+
+> **Not:** Farklı Node.js versiyonları veya işletim sistemleri arasında geçiş yapıyorsanız, `cd backend && npm rebuild better-sqlite3` komutunu tekrar çalıştırın.
 
 ## 🚀 Kullanım
 
