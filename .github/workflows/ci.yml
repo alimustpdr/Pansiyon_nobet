@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install root dependencies
+      run: npm ci
+
+    - name: Install backend dependencies
+      run: cd backend && npm ci
+
+    - name: Install frontend dependencies
+      run: cd frontend && npm ci
+
+    - name: Build backend
+      run: cd backend && npm run build
+
+    - name: Build frontend
+      run: cd frontend && npm run build
+
+    - name: Check for test scripts
+      id: check-tests
+      run: |
+        if grep -q '"test"' package.json backend/package.json frontend/package.json; then
+          echo "has_tests=true" >> $GITHUB_OUTPUT
+        else
+          echo "has_tests=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Run tests (if available)
+      if: steps.check-tests.outputs.has_tests == 'true'
+      run: |
+        if grep -q '"test"' package.json; then npm test; fi
+        if grep -q '"test"' backend/package.json; then cd backend && npm test; fi
+        if grep -q '"test"' frontend/package.json; then cd frontend && npm test; fi

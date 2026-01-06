@@ -55,27 +55,50 @@ Her pansiyon için her gün tipi ayrı ayrı ayarlanabilir.
 
 ### Adımlar
 
-1. **Bağımlılıkları yükleyin:**
+1. **Repoyu klonlayın:**
+```bash
+git clone https://github.com/alimustpdr/Pansiyon_nobet.git
+cd Pansiyon_nobet
+```
+
+2. **Bağımlılıkları yükleyin:**
 ```bash
 npm run install:all
 ```
 
-2. **Geliştirme modunda çalıştırın:**
+Bu komut tüm bağımlılıkları (root, backend ve frontend) kurar.
+
+3. **Geliştirme modunda çalıştırın:**
 ```bash
 npm run dev
 ```
 
-Bu komut hem backend (port 3001) hem de frontend (port 5173) sunucularını başlatır.
+Bu komut hem backend (port 3001) hem de frontend (port 5173) sunucularını eşzamanlı olarak başlatır.
 
-3. **Üretim için derleyin:**
+4. **Üretim için derleyin:**
 ```bash
 npm run build
 ```
 
-4. **Üretim modunda çalıştırın:**
+Backend ve frontend ayrı ayrı derlemek için:
+```bash
+npm run build:backend
+npm run build:frontend
+```
+
+5. **Üretim modunda çalıştırın:**
 ```bash
 npm start
 ```
+
+### Ortam Değişkenleri (Opsiyonel)
+
+Backend için `.env` dosyası oluşturabilirsiniz (`.env.example` dosyasını referans alın):
+```bash
+cp .env.example .env
+```
+
+Backend varsayılan olarak `PORT=3001` kullanır.
 
 ## 🚀 Kullanım
 
@@ -142,6 +165,13 @@ npm start
 - ❌ "Toplam nöbetçi tek sayıysa..." mantığı
 - ❌ Hafta sonu için cinsiyet kuralını gevşetme
 - ❌ İki pansiyon arasında dengeleme
+
+## 🚦 Continuous Integration
+
+Proje GitHub Actions ile otomatik olarak test edilir ve derlenir:
+- Her push ve pull request'te otomatik build
+- Node.js 18.x ve 20.x versiyonları ile test
+- Backend ve frontend TypeScript derleme kontrolü
 
 ## 🔧 API Endpoints
 
